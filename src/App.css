@@ -1,4 +1,9 @@
 body {
-  font-family: "Barlow", sans-serif;
+  font-family: "Roboto Mono", monospace;
   padding: 20px 40px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
