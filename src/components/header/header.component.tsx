@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/084 crown.svg";
-import firebase, { auth } from "../../firebase/firebase.utils";
+import { auth } from "../../firebase/firebase.utils";
 import "./header.styles.scss";
+import User from "../entities/User";
 
 interface Props {
-  currentUser: firebase.User | null;
+  currentUser: User | null;
 }
 
 const Header: React.FC<Props> = ({ currentUser }) => (
