@@ -6,6 +6,7 @@ import "./header.styles.scss";
 import { User } from "../../redux/user/data";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/root-reducer";
+import CartIcon from "../cart-Icon/cart-Icon.component";
 
 interface Props {
   currentUser: User | null;
@@ -33,6 +34,7 @@ const Header: React.FC<Props> = ({ currentUser }) => (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
   </div>
 );
