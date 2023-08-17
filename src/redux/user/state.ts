@@ -1,5 +1,4 @@
-import { User } from "./data";
-
+import { User } from "./types";
 export default interface UserState {
   currentUser: User | null;
 }

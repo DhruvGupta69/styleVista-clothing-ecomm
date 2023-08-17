@@ -1,8 +1,14 @@
-import { CartState } from "./data";
-import { TOGGLE_CART_HIDDEN, CartActionTypes } from "./types";
+import { addItemToCart } from "./actions";
+import {
+  CartState,
+  TOGGLE_CART_HIDDEN,
+  CartActionTypes,
+  ADD_ITEM,
+} from "./types";
 
 const INITIAL_STATE: CartState = {
   hidden: true,
+  cartItems: [],
 };
 
 const cartReducer = (
@@ -14,6 +20,11 @@ const cartReducer = (
       return {
         ...state,
         hidden: !state.hidden,
+      };
+    case ADD_ITEM:
+      return {
+        ...state,
+        cartItems: addItemToCart(state.cartItems, action.payload),
       };
     default:
       return state;

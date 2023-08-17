@@ -15,7 +15,7 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/actions";
 import { UserActionTypes } from "./redux/user/types";
-import { User } from "./redux/user/data";
+import { User } from "./redux/user/types";
 import { RootState } from "./redux/root-reducer";
 
 interface Props {

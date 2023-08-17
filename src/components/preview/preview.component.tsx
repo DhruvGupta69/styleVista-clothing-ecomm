@@ -1,20 +1,24 @@
 import React from "react";
-import CollectionItem from "../collection-Item/collection-Item.component";
+import { Item } from "../../redux/cart/types";
+import collectionItemComponent from "../collection-Item/collection-Item.component";
 import "./preview.styles.scss";
+import CollectionItemComponent from "../collection-Item/collection-Item.component";
 
-const CollectionPreview = (props: any) => {
-  return (
-    <div className="collection-preview">
-      <h1 className="title">{props.title.toUpperCase()}</h1>
-      <div className="preview">
-        {props.items
-          .filter((item: any, idx: number) => idx < 4)
-          .map(({ id, ...otherItemProps }: { id: any }) => (
-            <CollectionItem key={id} {...otherItemProps} />
-          ))}
-      </div>
+interface Props {
+  title: string;
+  items: Array<Item>;
+}
+
+const CollectionPreview: React.FC<Props> = ({ title, items }) => (
+  <div className="collection-preview">
+    <h1 className="title">{title.toUpperCase()}</h1>
+    <div className="preview">
+      {items
+        .filter((item, index) => index < 4)
+        .map((item) => (
+          <CollectionItemComponent key={item.id} item={item} />
+        ))}
     </div>
-  );
-};
-
+  </div>
+);
 export default CollectionPreview;

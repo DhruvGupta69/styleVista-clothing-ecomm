@@ -6,15 +6,21 @@ interface Props {
   onClick?: MouseEventHandler;
   isGoogleSignIn?: boolean;
   children: React.ReactNode;
+  inverted?: boolean;
 }
 
 const CustomButton: React.FC<Props> = ({
   children,
   isGoogleSignIn,
+  inverted,
   ...otherProps
 }) => (
   <button
-    className={`${isGoogleSignIn ? "google-sign-in" : ""} custom-button`}
+    className={`
+      ${inverted ? "inverted" : ""}
+      ${isGoogleSignIn ? "google-sign-in" : ""}
+      custom-button
+    `}
     {...otherProps}
   >
     {children}
