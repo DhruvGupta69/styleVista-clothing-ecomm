@@ -7,12 +7,14 @@ import { User } from "../../redux/user/data";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/root-reducer";
 import CartIcon from "../cart-Icon/cart-Icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 interface Props {
   currentUser: User | null;
+  cartHidden: boolean;
 }
 
-const Header: React.FC<Props> = ({ currentUser }) => (
+const Header: React.FC<Props> = ({ currentUser, cartHidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -36,11 +38,13 @@ const Header: React.FC<Props> = ({ currentUser }) => (
       )}
       <CartIcon />
     </div>
+    {cartHidden ? null : <CartDropdown />}
   </div>
 );
 
 const mapStateToProps = (state: RootState) => ({
   currentUser: state.user.currentUser,
+  cartHidden: state.cart.hidden,
 });
 
 export default connect(mapStateToProps)(Header);
