@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/084 crown.svg";
 import { auth } from "../../firebase/firebase.utils";
 import "./header.styles.scss";
-import User from "../entities/User";
+import { User } from "../../redux/user/data";
+import { connect } from "react-redux";
+import { RootState } from "../../redux/root-reducer";
 
 interface Props {
   currentUser: User | null;
@@ -35,4 +37,8 @@ const Header: React.FC<Props> = ({ currentUser }) => (
   </div>
 );
 
-export default Header;
+const mapStateToProps = (state: RootState) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);
