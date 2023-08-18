@@ -1,8 +1,11 @@
 import React from "react";
+
 import HomePage from "./pages/homePage/homepage.component";
 import ShopPage from "./pages/shopPage/shopPage.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUp from "./pages/signIn&signUpPage/signIn&signUp.component";
+import CheckOutPage from "./components/checkout/checkout.component";
+
 import "./App.css";
 
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -16,7 +19,9 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/actions";
 import { UserActionTypes } from "./redux/user/types";
 import { User } from "./redux/user/types";
-import { RootState } from "./redux/root-reducer";
+
+import { selectCurrentUser } from "./redux/user/selector";
+import { createStructuredSelector } from "reselect";
 
 interface Props {
   setCurrentUser: (u: User | null) => UserActionTypes;
@@ -59,6 +64,7 @@ class App extends React.Component<Props, State> {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckOutPage} />
           <Route
             exact
             path="/signin"
@@ -72,8 +78,8 @@ class App extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ user }: RootState) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<UserActionTypes>) => ({

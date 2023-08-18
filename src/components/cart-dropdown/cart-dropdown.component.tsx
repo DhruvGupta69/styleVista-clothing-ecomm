@@ -1,31 +1,47 @@
 import React from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import CustomButton from "../custon-Button/custom-Button.component";
 import CartItemComponent from "../cartItem/cartItem.component";
 
 import { connect } from "react-redux";
 
 import "./cart-dropdown.styles.scss";
-import { CartItem } from "../../redux/cart/types";
-import { RootState } from "../../redux/root-reducer";
-import { selectCartItems } from "../../redux/cart/selectors";
+import { CartActionTypes, CartItem } from "../../redux/cart/types";
+import { toggleCartHidden } from "../../redux/cart/actions";
 
-interface Props {
+import { createStructuredSelector } from "reselect";
+import { selectCartItems } from "../../redux/cart/selectors";
+import { Dispatch } from "redux";
+
+interface Props extends RouteComponentProps {
   cartItems: Array<CartItem>;
+  dispatch: Dispatch<CartActionTypes>;
 }
 
-const CartDropdown: React.FC<Props> = ({ cartItems }) => (
+const CartDropdown: React.FC<Props> = ({ cartItems, history, dispatch }) => (
   <div className="cart-dropdown">
     <div className="cart-items">
-      {cartItems.map((cartItem) => (
-        <CartItemComponent key={cartItem.item.id} cartItem={cartItem} />
-      ))}
+      {cartItems.length ? (
+        cartItems.map((cartItem) => (
+          <CartItemComponent key={cartItem.item.id} cartItem={cartItem} />
+        ))
+      ) : (
+        <span className="empty-message">your cart is empty</span>
+      )}
     </div>
-    <CustomButton>CHECKOUT</CustomButton>
+    <CustomButton
+      onClick={() => {
+        history.push("/checkout");
+        dispatch(toggleCartHidden());
+      }}
+    >
+      CHECKOUT
+    </CustomButton>
   </div>
 );
 
-const mapStateToProps = (state: RootState) => ({
-  cartItems: selectCartItems(state),
+const mapStateToProps = createStructuredSelector({
+  cartItems: selectCartItems,
 });
 
-export default connect(mapStateToProps)(CartDropdown);
+export default withRouter(connect(mapStateToProps)(CartDropdown));
