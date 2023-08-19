@@ -7,6 +7,8 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems, selecCartTotal } from "../../redux/cart/selectors";
 import { CartItem } from "../../redux/cart/types";
 
+import CheckoutItem from "../checkout-Item/checkout-Item.component";
+
 interface Props {
   cartItems: Array<CartItem>;
   total: number;
@@ -32,10 +34,12 @@ const CheckOutPage: React.FC<Props> = ({ cartItems, total }) => {
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((cartItem) => cartItem.item.name)}
+      {cartItems.map((cartItem) => (
+        <CheckoutItem key={cartItem.item.id} cartItem={cartItem} />
+      ))}
 
       <div className="total">
-        <span>Total:{total}$</span>
+        <span>Total:${total}</span>
       </div>
     </div>
   );
