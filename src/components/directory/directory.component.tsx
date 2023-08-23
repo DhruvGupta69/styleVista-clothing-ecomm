@@ -2,63 +2,29 @@ import React from "react";
 import MenuItem from "../menu-item/menu-item.component";
 import "./directory.styles.scss";
 
-type myState = {
-  sections: {
-    title: string;
-    imageUrl: string;
-    id: number;
-    size?: string;
-    linkUrl: string;
-  }[];
-};
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-class Directory extends React.Component<{}, myState> {
-  state: myState = {
-    sections: [
-      {
-        title: "hats",
-        imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
-        id: 1,
-        linkUrl: "hats",
-      },
-      {
-        title: "jackets",
-        imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
-        id: 2,
-        linkUrl: "",
-      },
-      {
-        title: "sneakers",
-        imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
-        id: 3,
-        linkUrl: "",
-      },
-      {
-        title: "womens",
-        imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-        id: 4,
-        size: "large",
-        linkUrl: "",
-      },
-      {
-        title: "mens",
-        imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-        id: 5,
-        size: "large",
-        linkUrl: "",
-      },
-    ],
-  };
+import { Section } from "../../redux/directory/types";
+import { RootState } from "../../redux/root-reducer";
+import { selectDirectorySelctions } from "../../redux/directory/selector";
 
-  render() {
-    return (
-      <div className="container-menu">
-        {this.state.sections.map(({ id, ...otherSectionProps }) => (
-          <MenuItem key={id} {...otherSectionProps} />
-        ))}
-      </div>
-    );
-  }
+interface Props {
+  sections: Array<Section>;
 }
 
-export default Directory;
+const Directory: React.FC<Props> = ({ sections }) => {
+  return (
+    <div className="container-menu">
+      {sections.map(({ id, ...otherSectionProps }) => (
+        <MenuItem key={id} {...otherSectionProps} />
+      ))}
+    </div>
+  );
+};
+
+const mapStateToProps = createStructuredSelector({
+  sections: selectDirectorySelctions,
+});
+
+export default connect(mapStateToProps)(Directory);
